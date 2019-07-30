@@ -11,6 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu/trusty64"
+  config.vm.define "PredictionIO"
 
   # The URL that the configured box can be found at.
   # If the box is not installed on the system, it will be retrieved from this URL when vagrant up is run.
@@ -18,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # see http://www.virtualbox.org/manual/ch08.html#vboxmanage-modifyvm
   config.vm.provider "virtualbox" do |v|
-    v.customize ["modifyvm", :id, "--cpuexecutioncap", "90", "--memory", "2048"]
+    v.customize ["modifyvm", :id, "--cpuexecutioncap", "90", "--memory", "4096"]
   end
 
   # The url from where the 'config.vm.box' box will be fetched if it
@@ -33,7 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network :forwarded_port, guest: 7070, host: 7070
   config.vm.network :forwarded_port, guest: 7077, host: 7077
-  config.vm.network :forwarded_port, guest: 8000, host: 8000
+  config.vm.network :forwarded_port, guest: 8000, host: 8001
   config.vm.network :forwarded_port, guest: 8080, host: 8080
   config.vm.network :forwarded_port, guest: 9000, host: 9000
 
@@ -41,10 +42,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network :forwarded_port, guest: 80, host: 8080
+  config.vm.network :forwarded_port, guest: 9200, host: 9200
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network :private_network, ip: "192.168.33.10"
+  config.vm.network :private_network, ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
